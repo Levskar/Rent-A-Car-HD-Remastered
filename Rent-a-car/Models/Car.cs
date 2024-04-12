@@ -9,7 +9,7 @@ namespace Rent_a_car.Models
         public string Brand { get; set; }
         public string Model { get; set; }
         public int NumberOfPassengerSeats { get; set; }
-        public decimal RentalPrice { get; set; }
+        public double RentalPrice { get; set; }
         public string Description { get; set; }
 
         public HashSet<Query> Queries { get; set; }
