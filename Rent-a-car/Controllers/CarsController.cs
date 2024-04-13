@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -25,6 +26,17 @@ namespace Rent_a_car.Controllers
             return View(await _context.Car.ToListAsync());
         }
 
+        // GET: Cars/ShowSearchForm
+        public async Task<IActionResult> ShowSearchForm()
+        {
+            return View();
+        } 
+        // PoST: Cars/ShowSearchResults
+        public async Task<IActionResult> ShowSearchResults(String SearchPhrase)
+        {
+            return View("Index", await _context.Car.Where( c => c.Brand.Contains(SearchPhrase)).ToListAsync());
+        }
+
         // GET: Cars/Details/5
         public async Task<IActionResult> Details(int? id)
         {
@@ -43,6 +55,7 @@ namespace Rent_a_car.Controllers
             return View(car);
         }
 
+        [Authorize]
         // GET: Cars/Create
         public IActionResult Create()
         {
@@ -52,6 +65,7 @@ namespace Rent_a_car.Controllers
         // POST: Cars/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Brand,Model,NumberOfPassengerSeats,RentalPrice,Description")] Car car)
@@ -84,6 +98,7 @@ namespace Rent_a_car.Controllers
         // POST: Cars/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Brand,Model,NumberOfPassengerSeats,RentalPrice,Description")] Car car)
@@ -117,6 +132,7 @@ namespace Rent_a_car.Controllers
         }
 
         // GET: Cars/Delete/5
+        [Authorize]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -135,6 +151,7 @@ namespace Rent_a_car.Controllers
         }
 
         // POST: Cars/Delete/5
+        [Authorize]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
