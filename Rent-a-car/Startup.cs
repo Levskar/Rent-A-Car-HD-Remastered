@@ -7,7 +7,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using Rent_a_car.Data;
+using Rent_a_car.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -32,14 +34,16 @@ namespace Rent_a_car
                     Configuration.GetConnectionString("DefaultConnection")));
             services.AddDatabaseDeveloperPageExceptionFilter();
 
-            services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+            services.AddDefaultIdentity<User>(options => options.SignIn.RequireConfirmedAccount = true)
+                //.AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddControllersWithViews();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public async void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -66,6 +70,37 @@ namespace Rent_a_car
                     pattern: "{controller=Home}/{action=Index}/{id?}");
                 endpoints.MapRazorPages();
             });
+
+            //using (var scope = app.ApplicationServices.CreateScope())
+            //{
+            //    var userManager = scope.ServiceProvider.GetRequiredService<UserManager<User>>();
+                
+
+            //    var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+            //    var roles = new[] { "Admin", "User" };
+            //    foreach (var role in roles)
+            //    {
+            //        if (!await roleManager.RoleExistsAsync(role))
+            //        {
+            //            await roleManager.CreateAsync(new IdentityRole(role));
+            //        }
+            //    }
+
+            //    string adminemailadress = "admin@rentacarhd.com";
+            //    string adminpassword = "AdminskaParola1.";
+            //    if (await userManager.FindByEmailAsync(adminemailadress) == null)
+            //    {
+            //        User admin = new User();
+            //        admin.Email = adminemailadress;
+            //        admin.UID = "0000000000";
+            //        admin.UserName = adminemailadress;
+            //        admin.EmailConfirmed = true;
+            //        await userManager.CreateAsync(admin, adminpassword);
+            //        await userManager.AddToRoleAsync(admin, "Admin");
+            //    }
+            //}
+
+            
         }
     }
 }

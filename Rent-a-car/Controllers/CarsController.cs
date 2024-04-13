@@ -21,6 +21,7 @@ namespace Rent_a_car.Controllers
         }
 
         // GET: Cars
+        [Authorize]
         public async Task<IActionResult> Index()
         {
             return View(await _context.Car.ToListAsync());

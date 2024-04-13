@@ -7,7 +7,7 @@ using Rent_a_car.Models;
 
 namespace Rent_a_car.Data
 {
-    public class ApplicationDbContext : IdentityDbContext
+    public class ApplicationDbContext : IdentityDbContext<User>
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
@@ -15,5 +15,9 @@ namespace Rent_a_car.Data
         }
         public DbSet<Rent_a_car.Models.Car> Car { get; set; }
         public DbSet<Rent_a_car.Models.Query> Query { get; set; }
+        public ApplicationDbContext()
+        {
+                
+        }
     }
 }

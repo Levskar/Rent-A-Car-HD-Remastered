@@ -12,7 +12,7 @@ namespace Rent_a_car.Models
         public decimal RentalPrice { get; set; }
         public string Description { get; set; }
 
-        public HashSet<Query> Queries { get; set; }
+       
 
         public Car() { }
     }
