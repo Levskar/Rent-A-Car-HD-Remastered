@@ -34,7 +34,7 @@ namespace Rent_a_car
                     Configuration.GetConnectionString("DefaultConnection")));
             services.AddDatabaseDeveloperPageExceptionFilter();
 
-            services.AddDefaultIdentity<User>(options => options.SignIn.RequireConfirmedAccount = true)
+            services.AddDefaultIdentity<User>(options => options.SignIn.RequireConfirmedAccount = true).AddRoles<IdentityRole>()    
                 //.AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddControllersWithViews();
@@ -71,36 +71,36 @@ namespace Rent_a_car
                 endpoints.MapRazorPages();
             });
 
-            //using (var scope = app.ApplicationServices.CreateScope())
-            //{
-            //    var userManager = scope.ServiceProvider.GetRequiredService<UserManager<User>>();
-                
+            using (var scope = app.ApplicationServices.CreateScope())
+            {
+                var userManager = scope.ServiceProvider.GetRequiredService<UserManager<User>>();
 
-            //    var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
-            //    var roles = new[] { "Admin", "User" };
-            //    foreach (var role in roles)
-            //    {
-            //        if (!await roleManager.RoleExistsAsync(role))
-            //        {
-            //            await roleManager.CreateAsync(new IdentityRole(role));
-            //        }
-            //    }
 
-            //    string adminemailadress = "admin@rentacarhd.com";
-            //    string adminpassword = "AdminskaParola1.";
-            //    if (await userManager.FindByEmailAsync(adminemailadress) == null)
-            //    {
-            //        User admin = new User();
-            //        admin.Email = adminemailadress;
-            //        admin.UID = "0000000000";
-            //        admin.UserName = adminemailadress;
-            //        admin.EmailConfirmed = true;
-            //        await userManager.CreateAsync(admin, adminpassword);
-            //        await userManager.AddToRoleAsync(admin, "Admin");
-            //    }
-            //}
+                var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+                var roles = new[] { "Admin", "User" };
+                foreach (var role in roles)
+                {
+                    if (!await roleManager.RoleExistsAsync(role))
+                    {
+                        await roleManager.CreateAsync(new IdentityRole(role));
+                    }
+                }
 
-            
+                string adminemailadress = "admin@rentacarhd.com";
+                string adminpassword = "AdminskaParola1.";
+                if (await userManager.FindByEmailAsync(adminemailadress) == null)
+                {
+                    User admin = new User();
+                    admin.Email = adminemailadress;
+                    admin.UID = "0000000000";
+                    admin.UserName = adminemailadress;
+                    admin.EmailConfirmed = true;
+                    await userManager.CreateAsync(admin, adminpassword);
+                    await userManager.AddToRoleAsync(admin, "Admin");
+                }
+            }
+
+
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 using System.Collections.Generic;
+using Microsoft.AspNetCore.Hosting;
 
 namespace Rent_a_car.Models
 {
