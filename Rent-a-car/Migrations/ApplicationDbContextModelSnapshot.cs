@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Rent_a_car.Data;
 
-namespace Rent_a_car.Data.Migrations
+namespace Rent_a_car.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
     partial class ApplicationDbContextModelSnapshot : ModelSnapshot
@@ -244,8 +244,8 @@ namespace Rent_a_car.Data.Migrations
                     b.Property<int>("NumberOfPassengerSeats")
                         .HasColumnType("int");
 
-                    b.Property<decimal>("RentalPrice")
-                        .HasColumnType("decimal(18,2)");
+                    b.Property<double>("RentalPrice")
+                        .HasColumnType("float");
 
                     b.HasKey("Id");
 

@@ -7,11 +7,11 @@ using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Rent_a_car.Data;
 
-namespace Rent_a_car.Data.Migrations
+namespace Rent_a_car.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240412164552_initalsetup")]
-    partial class initalsetup
+    [Migration("20240412170444_initial")]
+    partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -246,8 +246,8 @@ namespace Rent_a_car.Data.Migrations
                     b.Property<int>("NumberOfPassengerSeats")
                         .HasColumnType("int");
 
-                    b.Property<decimal>("RentalPrice")
-                        .HasColumnType("decimal(18,2)");
+                    b.Property<double>("RentalPrice")
+                        .HasColumnType("float");
 
                     b.HasKey("Id");
 
